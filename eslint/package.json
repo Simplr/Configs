@@ -1,6 +1,6 @@
 {
   "name": "@simplr-wc/eslint-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "author": "Simplr",
@@ -15,5 +15,8 @@
   },
   "dependencies": {
     "@open-wc/eslint-config": "^3.0.0"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.js"
   }
 }

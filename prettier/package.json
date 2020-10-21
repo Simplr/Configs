@@ -1,6 +1,6 @@
 {
   "name": "@simplr-wc/prettier-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "prettier.config.js",
   "author": "Simplr",
@@ -16,5 +16,8 @@
   "dependencies": {
     "eslint-config-prettier": "^3.3.0",
     "prettier": "^2.0.0"
+  },
+  "scripts": {
+    "postinstall": "node postinstall.js"
   }
 }

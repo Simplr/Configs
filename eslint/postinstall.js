@@ -1,6 +1,6 @@
 console.log(`Enable with 
 
   "eslintConfig": {
-    "extends": ["eslint-config-prettier"]
+  "extends": ["@simplr-wc/eslint-config"]
   }
 `);

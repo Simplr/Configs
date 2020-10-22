@@ -9,7 +9,7 @@ npm install -D @simplr-wc/eslint-config
 {
   "...": "...",
   "eslintConfig": {
-    "extends": ["eslint-config-prettier"]
+    "extends": ["@simplr-wc/eslint-config"]
   }
 }
 ```

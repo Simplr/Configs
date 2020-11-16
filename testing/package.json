@@ -1,0 +1,21 @@
+{
+    "name": "testing",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "prettier": "@simplr-wc/prettier-config",
+    "devDependencies": {
+        "@simplr-wc/eslint-config": "^1.0.3",
+        "@simplr-wc/prettier-config": "^1.0.3"
+    },
+    "eslintConfig": {
+        "extends": [
+            "@simplr-wc/eslint-config"
+        ]
+    }
+}

@@ -1,6 +1,6 @@
 # Create
 
-## ![Simplr Create Logo](./simplr-create.png)
+## ![Simplr Create Logo](https://raw.githubusercontent.com/Simplr/Configs/main/create/simplr-create.png)
 
 ### Create Script
 

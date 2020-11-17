@@ -52,6 +52,7 @@ export default class TemplateComponent extends HTMLElement {
             <h2>title</h2>
             <p>subtitle</p>
             <span>Modify me at <code>src/template-component.js</code></span>
+            <a href="info"><p>If you installed Simplr Router, this link should take you to the info page</p></a>
         `;
     }
 
@@ -71,8 +72,12 @@ export default class TemplateComponent extends HTMLElement {
                     overflow: hidden;
                 }
 
-                p {
+                :host > p:first-of-type {
                     animation: 4000ms ease-in infinite slide-in;
+                }
+
+                a {
+                    color: inherit;
                 }
 
                 @keyframes slide-in {

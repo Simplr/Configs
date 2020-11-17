@@ -1,0 +1,27 @@
+{
+    "name": "matiaksen-demo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "wds --node-resolve --watch --open"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@simplr-wc/eslint-config": "^1.0.3",
+        "@simplr-wc/prettier-config": "^1.0.3",
+        "@web/dev-server": "0.0.21"
+    },
+    "prettier": "@simplr-wc/prettier-config",
+    "eslintConfig": {
+        "extends": [
+            "@simplr-wc/eslint-config"
+        ]
+    },
+    "dependencies": {
+        "@simplr-wc/router": "^5.6.1",
+        "lit-element": "^2.4.0"
+    }
+}

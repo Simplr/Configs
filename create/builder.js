@@ -19,6 +19,7 @@ async function build(decisions) {
     await installNecessities(projectDir);
     await installExtras(projectDir, decisions);
     await installRouting(projectDir, decisions);
+    await installOthers(projectDir, decisions);
     await rewriteFunctionNames(projectDir, decisions);
     console.log(`
 
@@ -76,6 +77,7 @@ async function installRouting(projectDir, decisions) {
     await runComm(`cd ${projectDir} && npm install ${routerNpmRegistry}`);
     fs.copyFileSync(`${routerTemplates}/router.js`, `${projectDir}/src/router.js`);
     fs.copyFileSync(`${routerTemplates}/routes.js`, `${projectDir}/src/routes.js`);
+    fs.copyFileSync(`${routerTemplates}/info-view.js`, `${projectDir}/src/info-view.js`);
     fs.copyFileSync(`${routerTemplates}/index.html`, `${projectDir}/index.html`);
 }
 
@@ -94,6 +96,14 @@ async function rewriteFunctionNames(projectDir, decisions) {
     await runComm(`sed -i 's/template-component/${projectNameKebabCase}/g' ${projectDir}/src/*.js`);
 
     fs.renameSync(`${projectDir}/src/template-component.js`, `${projectDir}/src/${projectNameKebabCase}.js`);
+}
+
+async function installOthers(projectDir, decisions) {
+    if (!decisions.template.installs) return;
+    for (let inst of decisions.template.installs) {
+        console.log(`🔨  Installing ${inst}...`);
+        await runComm(`cd ${projectDir} && npm install ${inst}`);
+    }
 }
 
 function kebabToPascal(nameString) {

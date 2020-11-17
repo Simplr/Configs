@@ -1,8 +1,8 @@
 const routes = [
     {
         path: '/',
-        component: 'template-component',
-        import: () => import('./template-component.js'),
+        component: 'matiaksen-demo',
+        import: () => import('./matiaksen-demo.js'),
     },
     {
         path: 'info',

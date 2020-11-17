@@ -1,0 +1,26 @@
+{
+    "name": "create",
+    "version": "1.0.0",
+    "description": "Here will be multiple create-xxx-xxx scripts to use for different templates",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@simplr-wc/router": "^5.6.1",
+        "ncp": "^2.0.0",
+        "prompts": "^2.4.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "@simplr-wc/eslint-config"
+        ]
+    },
+    "prettier": "@simplr-wc/prettier-config",
+    "devDependencies": {
+        "@simplr-wc/eslint-config": "^1.0.3",
+        "@simplr-wc/prettier-config": "^1.0.3"
+    }
+}

@@ -2,11 +2,13 @@ const fs = require('fs');
 const ncp = require('ncp').ncp;
 const { exec } = require('child_process');
 
+const ROOT_DIR = require.main.filename.replace('/bin/create', '');
+
 const prettierNpmRegistry = '@simplr-wc/prettier-config';
 const eslintNpmRegistry = '@simplr-wc/eslint-config';
 const routerNpmRegistry = '@simplr-wc/router';
 
-const routerTemplates = './templates/router';
+const routerTemplates = ROOT_DIR + '/templates/router';
 
 async function build(decisions) {
     const projectDir = decisions.projectName;
@@ -50,7 +52,7 @@ async function npmInit(projectDir) {
 async function installNecessities(projectDir) {
     console.log('🔨  Installing Web Dev Server...');
     await runComm(`cd ${projectDir} && npm install -D @web/dev-server`);
-    const packageJSONPath = `./${projectDir}/package.json`;
+    const packageJSONPath = process.cwd() + `/${projectDir}/package.json`;
     const packageJSON = require(packageJSONPath);
     delete packageJSON.scripts['test'];
     packageJSON.scripts['start'] = 'wds --node-resolve --watch --open';

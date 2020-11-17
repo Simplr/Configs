@@ -3,6 +3,7 @@ const build = require('./builder.js').default;
 let decisions = {};
 const prompts = require('prompts');
 
+const ROOT_DIR = require.main.filename.replace('/bin/create', '');
 const EXTRA_PRETTIER = 0;
 const EXTRA_ESLINT = 1;
 
@@ -10,15 +11,15 @@ const templateTypes = [
     {
         value: 0,
         title: 'Lit Element template',
-        src: './templates/lit-element/',
+        src: `${ROOT_DIR}/templates/lit-element/`,
         installs: ['lit-element'],
     },
     {
         value: 1,
         title: 'HTML Element template',
-        src: './templates/html-element/',
+        src: `${ROOT_DIR}/templates/html-element/`,
     },
-    { value: 2, title: 'React template', src: './templates/react/' },
+    { value: 2, title: 'React template', src: `${ROOT_DIR}/templates/react/` },
 ];
 
 const extras = [
@@ -89,7 +90,7 @@ async function queryRouting() {
         {
             type: 'confirm',
             name: 'value',
-            message: 'Use routing? (simplr-router) (y/n) 🚀 ',
+            message: '  Use routing? (simplr-router) (y/n) 🚀 ',
             initial: true,
         },
         { onCancel },
@@ -103,7 +104,7 @@ async function queryProjectName() {
         {
             type: 'text',
             name: 'value',
-            message: "What's the name of the project?",
+            message: "  What's the name of the project?",
         },
         { onCancel },
     );

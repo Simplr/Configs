@@ -1,10 +1,13 @@
 {
-    "name": "create",
-    "version": "1.0.0",
-    "description": "Here will be multiple create-xxx-xxx scripts to use for different templates",
-    "main": "index.js",
+    "name": "@simplr-wc/create",
+    "version": "1.1.0",
+    "description": "Create is a quick start for Web Components provided by Simplr",
+    "main": "./bin/create",
+    "bin": {
+        "create": "./bin/create"
+    },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "run": "./bin/create"
     },
     "author": "",
     "license": "ISC",
@@ -22,5 +25,8 @@
     "devDependencies": {
         "@simplr-wc/eslint-config": "^1.0.3",
         "@simplr-wc/prettier-config": "^1.0.3"
+    },
+    "publishConfig": {
+        "access": "public"
     }
 }

@@ -1,9 +1,10 @@
 const build = require('./builder.js').default;
+const getProjectDirectory = require('./helper.js').getProjectDirectory;
+const ROOT_DIR = getProjectDirectory();
 
 let decisions = {};
 const prompts = require('prompts');
 
-const ROOT_DIR = require.main.filename.replace('/bin/create', '');
 const EXTRA_PRETTIER = 0;
 const EXTRA_ESLINT = 1;
 
@@ -108,8 +109,8 @@ async function queryProjectName() {
         },
         { onCancel },
     );
-    if (!response.value) {
-        console.error('You must supply a name for the project');
+    if (!response.value || !response.value.includes('-')) {
+        console.error('You must supply a name for the project and it must include a dash. e.g. my-project');
         exitWith(0);
     }
     decisions.projectName = response.value;

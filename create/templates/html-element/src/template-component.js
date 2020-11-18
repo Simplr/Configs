@@ -103,7 +103,9 @@ export default class TemplateComponent extends HTMLElement {
     setDefaults() {
         const attributes = TemplateComponent.attributes;
         Object.keys(attributes).forEach(attr => {
-            this[attr] = attributes[attr].default;
+            if (!this[attr]) {
+                this[attr] = attributes[attr].default;
+            }
         });
     }
 

@@ -1,8 +1,9 @@
 const fs = require('fs');
+const path = require('path');
 const ncp = require('ncp').ncp;
 const { exec } = require('child_process');
-
-const ROOT_DIR = require.main.filename.replace('/bin/create', '');
+const getProjectDirectory = require('./helper.js').getProjectDirectory;
+const ROOT_DIR = getProjectDirectory();
 
 const prettierNpmRegistry = '@simplr-wc/prettier-config';
 const eslintNpmRegistry = '@simplr-wc/eslint-config';
@@ -89,15 +90,35 @@ async function rewriteFunctionNames(projectDir, decisions) {
     const projectNamePascalCase = kebabToPascal(projName);
     const projectNameKebabCase = pascalToKebab(projName);
 
-    // Figure out something better
-    await runComm(`sed -i 's/template-component/${projectNameKebabCase}/g' ${projectDir}/*.html`);
-    await runComm(`sed -i 's/TemplateComponent/${projectNamePascalCase}/g' ${projectDir}/*.html`);
-    await runComm(`sed -i 's/template-component/${projectNameKebabCase}/g' ${projectDir}/*.json`);
-    await runComm(`sed -i 's/TemplateComponent/${projectNamePascalCase}/g' ${projectDir}/*.json`);
-    await runComm(`sed -i 's/TemplateComponent/${projectNamePascalCase}/g' ${projectDir}/src/*.js`);
-    await runComm(`sed -i 's/template-component/${projectNameKebabCase}/g' ${projectDir}/src/*.js`);
+    const files = fs.readdirSync(projectDir);
+    files.forEach(file => {
+        const pathToFile = projectDir + path.sep + file;
+        const isDir = fs.lstatSync(pathToFile).isDirectory();
+        if (!isDir) {
+            replaceStringInFile('template-component', projectNameKebabCase, pathToFile);
+            replaceStringInFile('TemplateComponent', projectNamePascalCase, pathToFile);
+        }
+    });
+
+    const sourcePath = projectDir + path.sep + 'src';
+    const sourceFiles = fs.readdirSync(sourcePath);
+
+    sourceFiles.forEach(file => {
+        const pathToFile = sourcePath + path.sep + file;
+        const isDir = fs.lstatSync(pathToFile).isDirectory();
+        if (!isDir) {
+            replaceStringInFile('template-component', projectNameKebabCase, pathToFile);
+            replaceStringInFile('TemplateComponent', projectNamePascalCase, pathToFile);
+        }
+    });
 
     fs.renameSync(`${projectDir}/src/template-component.js`, `${projectDir}/src/${projectNameKebabCase}.js`);
+}
+
+async function replaceStringInFile(from, to, file) {
+    let fileAsString = fs.readFileSync(file, 'utf-8');
+    fileAsString = fileAsString.replace(new RegExp(from, 'g'), to);
+    fs.writeFileSync(file, fileAsString, 'utf8');
 }
 
 async function installOthers(projectDir, decisions) {

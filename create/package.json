@@ -1,6 +1,6 @@
 {
     "name": "@simplr-wc/create",
-    "version": "1.1.4",
+    "version": "1.2.0",
     "description": "Create is a quick start for Web Components provided by Simplr",
     "main": "./bin/create",
     "bin": {
@@ -9,6 +9,11 @@
     "scripts": {
         "run": "./bin/create"
     },
+    "files": [
+        "lib",
+        "bin",
+        "templates"
+    ],
     "author": "",
     "license": "ISC",
     "dependencies": {

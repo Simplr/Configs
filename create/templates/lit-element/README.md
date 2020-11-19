@@ -15,7 +15,7 @@ npm install template-component
 ## Usage
 
 ```html
-<script src="template-component" type="module"></script>
+<script src="./src/template-component.js" type="module"></script>
 
 <template-component></template-component>
 ```

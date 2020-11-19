@@ -10,8 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/Simplr/Configs",
-        "directory": "prettier"
+        "url": "https://github.com/Simplr/Configs/create"
     },
     "dependencies": {
         "eslint-config-prettier": "^3.3.0",

@@ -10,6 +10,30 @@ const eslintNpmRegistry = '@simplr-wc/eslint-config';
 const routerNpmRegistry = '@simplr-wc/router';
 
 const routerTemplates = ROOT_DIR + '/templates/router';
+const rollupTemplates = ROOT_DIR + '/templates/rollup';
+
+const rollupDeps = [
+    'rimraf',
+    '@rollup/plugin-node-resolve',
+    'rollup-plugin-copy',
+    'rollup-plugin-filesize',
+    'rollup-plugin-minify-html-literals',
+    'rollup-plugin-terser',
+];
+
+function getPackageJson(projectDir) {
+    const packageJSONPath = process.cwd() + `/${projectDir}/package.json`;
+    const packageJSON = require(packageJSONPath);
+    return packageJSON;
+}
+
+function getPackageJsonPath(projectDir) {
+    return process.cwd() + `/${projectDir}/package.json`;
+}
+
+function writePackageJson(packageJSONPath, packageJSON) {
+    fs.writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 4));
+}
 
 async function build(decisions) {
     const projectDir = decisions.projectName;
@@ -24,6 +48,7 @@ async function build(decisions) {
     await installRouting(projectDir, decisions);
     await installOthers(projectDir, decisions);
     await rewriteFunctionNames(projectDir, decisions);
+    await rewritePackageJson(projectDir, decisions);
     console.log(`
 
     ✅ All done!
@@ -53,15 +78,11 @@ async function npmInit(projectDir) {
 async function installNecessities(projectDir) {
     console.log('🔨  Installing Web Dev Server...');
     await runComm(`cd ${projectDir} && npm install -D @web/dev-server`);
-    const packageJSONPath = process.cwd() + `/${projectDir}/package.json`;
-    const packageJSON = require(packageJSONPath);
-    delete packageJSON.scripts['test'];
-    packageJSON.scripts['start'] = 'wds --node-resolve --watch --open';
-
-    fs.writeFileSync(packageJSONPath, JSON.stringify(packageJSON, null, 4));
 }
 
 async function installExtras(projectDir, decisions) {
+    const projName = decisions.projectName;
+    const projectNameKebabCase = pascalToKebab(projName);
     if (decisions.prettier) {
         console.log('🔨  Installing prettier...');
         await runComm(`cd ${projectDir} && npm install -D ${prettierNpmRegistry}`);
@@ -69,6 +90,21 @@ async function installExtras(projectDir, decisions) {
     if (decisions.eslint) {
         console.log('🔨  Installing eslint...');
         await runComm(`cd ${projectDir} && npm install -D ${eslintNpmRegistry}`);
+    }
+    if (decisions.rollup) {
+        console.log('🔨  Installing rollup...');
+        await runComm(`cd ${projectDir} && npm install -D rollup`);
+        for (const dep of rollupDeps) {
+            await runComm(`cd ${projectDir} && npm install -D ${dep}`);
+        }
+        fs.copyFileSync(`${rollupTemplates}/rollup.config.js`, `${projectDir}/rollup.config.js`);
+
+        const pathToFile = projectDir + path.sep + 'rollup.config.js';
+        if (decisions.routing) {
+            replaceStringInFile('template-component', 'router', pathToFile);
+        } else {
+            replaceStringInFile('template-component', projectNameKebabCase, pathToFile);
+        }
     }
 }
 
@@ -129,6 +165,19 @@ async function installOthers(projectDir, decisions) {
     }
 }
 
+async function rewritePackageJson(projectDir, decisions) {
+    const packageJSONPath = getPackageJsonPath(projectDir);
+    const packageJSON = getPackageJson(projectDir);
+    delete packageJSON.scripts['test'];
+
+    packageJSON.scripts['start'] = 'wds --node-resolve --watch --open';
+
+    if (decisions.rollup) {
+        packageJSON.scripts['build'] = 'rimraf dist && rollup -c rollup.config.js';
+    }
+    writePackageJson(packageJSONPath, packageJSON);
+}
+
 function kebabToPascal(nameString) {
     if (!nameString.includes('-')) return nameString;
     const parts = nameString.split('-');
@@ -154,6 +203,7 @@ function pascalToKebab(nameString) {
 }
 
 function runComm(command) {
+    console.log(`Running command: ${command}`);
     return new Promise((resolve, reject) => {
         exec(command, (error, stdout, stderr) => {
             if (error) {

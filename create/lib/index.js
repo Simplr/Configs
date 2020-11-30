@@ -7,6 +7,7 @@ const prompts = require('prompts');
 
 const EXTRA_PRETTIER = 0;
 const EXTRA_ESLINT = 1;
+const EXTRA_ROLLUP = 2;
 
 const templateTypes = [
     {
@@ -32,12 +33,16 @@ const extras = [
         value: EXTRA_ESLINT,
         title: 'ESLint',
     },
+    {
+        value: EXTRA_ROLLUP,
+        title: 'Rollup',
+    },
 ];
 
 function welcome() {
     console.clear();
     console.log(`
-@@@@@@@@@@@@@@@@@@@ @@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @@@@@@ @@@@@@@@@         @@@@@@
 @@@@   @@@@@@@             @@@@   🏗️  Welcome to the Simplr Quick Start 🏗️
 @@     @@@@@@@               @@
@@ -83,6 +88,7 @@ async function queryExtras() {
     );
     decisions.prettier = response.value.includes(EXTRA_PRETTIER);
     decisions.eslint = response.value.includes(EXTRA_ESLINT);
+    decisions.rollup = response.value.includes(EXTRA_ROLLUP);
 }
 
 async function queryRouting() {

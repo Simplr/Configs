@@ -13,7 +13,7 @@ export default class TemplateComponent extends HTMLElement {
 
     connectedCallback() {
         this.setDefaults();
-        this.render();
+        this.requestRender();
     }
 
     render() {

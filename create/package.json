@@ -1,6 +1,6 @@
 {
     "name": "@simplr-wc/create",
-    "version": "1.3.0",
+    "version": "1.3.2",
     "description": "Create is a quick start for Web Components provided by Simplr",
     "main": "./bin/create",
     "bin": {

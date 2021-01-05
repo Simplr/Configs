@@ -21,7 +21,6 @@ const templateTypes = [
         title: 'HTML Element template',
         src: `${ROOT_DIR}/templates/html-element/`,
     },
-    { value: 2, title: 'React template', src: `${ROOT_DIR}/templates/react/` },
 ];
 
 const extras = [

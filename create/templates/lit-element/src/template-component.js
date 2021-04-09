@@ -32,9 +32,6 @@ export default class TemplateComponent extends LitElement {
 
     render() {
         return html`
-            <style>
-                ${this.renderStyles()}
-            </style>
             <h2>${this.title}</h2>
             <p>${this.subtitle}</p>
             <span>Modify me at <code>src/template-component.js</code></span>
@@ -42,7 +39,7 @@ export default class TemplateComponent extends LitElement {
         `;
     }
 
-    renderStyles() {
+    static get styles() {
         return css`
             :host {
                 display: flex;

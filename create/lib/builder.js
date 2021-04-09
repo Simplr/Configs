@@ -17,7 +17,8 @@ const rollupDeps = [
     '@rollup/plugin-node-resolve',
     'rollup-plugin-copy',
     'rollup-plugin-filesize',
-    'rollup-plugin-minify-html-literals',
+    // Removed until the rollup v2+ bug is fixed
+    // 'rollup-plugin-minify-html-literals', 
     'rollup-plugin-terser',
 ];
 
